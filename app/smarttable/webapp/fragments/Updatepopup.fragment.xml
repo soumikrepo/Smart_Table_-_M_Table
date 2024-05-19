@@ -1,0 +1,58 @@
+<core:FragmentDefinition  xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog id="popup" resizable="false" draggable="true">
+    <content>
+    <f:SimpleForm id="idForm">
+
+    <f:content>
+    <core:Title text="Update Purchase Order"></core:Title>
+
+    <Label text="ID"></Label>
+    <Input value="{ID}" id="idID"></Input>
+
+    <Label text="Purchase Order Id"></Label>
+        <Input value="{PURCHASE_ORDER_ID}" id="idPO"></Input>
+
+    <Label text="Partner Id"></Label>
+        <Input value="{PARTNER_ID}" id="idPI"></Input>
+
+    <Label text="Lifecycle Status"></Label>
+         <Input value="{LIFECYCLE_STATUS}" id="idLS"></Input>
+
+   
+    <Label text="Criticality"></Label>
+       <Input value="{Criticality}" id="idC"></Input>
+
+  <Label text="Overall Status"></Label>
+       <Input value="{OVERALL_STATUS}" id="idOC"></Input>
+
+    <Label text="Currency Code"></Label>
+         <Input value="{CURRENCY_CODE}" id="idCC"></Input>
+
+    <Label text="Gross Amount"></Label>
+        <Input value="{GROSS_AMOUNT}" id="idGA"></Input>
+
+    <Label text="Net Amount"></Label>
+        <Input value="{NET_AMOUNT}" id="idNA"></Input>
+
+    <Label text="Tax Amount"></Label>
+        <Input value="{TAX_AMOUNT}" id="idTA"></Input>
+
+    </f:content>
+    
+    </f:SimpleForm>
+    </content>
+
+    <footer>
+    <Toolbar >
+    <ToolbarSpacer ></ToolbarSpacer>
+    <Button type="Accept" text="Save Changes" press="saveChangesDialog"></Button>
+    <Button type="Reject" text="Cancel" press="cancelDialog"></Button>
+  
+    </Toolbar>
+    </footer>
+
+    </Dialog>
+</core:FragmentDefinition>
+
+
+  

@@ -1,0 +1,45 @@
+{
+  "xsappname": "smart_table-xs-app",
+  "tenant-mode": "dedicated",
+  "description": "Security profile of called application",
+  "scopes": [
+    {
+      "name": "uaa.user",
+      "description": "UAA"
+    },
+    {
+      "name": "$XSAPPNAME.Admin",
+      "description": "Do all operation"
+    },
+    {
+      "name": "$XSAPPNAME.USER",
+      "description": "Read operation"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Token_Exchange",
+      "description": "UAA",
+      "scope-references": [
+        "uaa.user"
+      ]
+    },
+    {
+      "name": "CRUD_OPERATIONS",
+      "description": "Can do all operation",
+      "scope-references": [
+        "$XSAPPNAME.Admin",
+        "$XSAPPNAME.USER"
+      ]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "PO_ROLE_COLLECTION",
+      "description": "role collections",
+      "role-template-references": [
+        "$XSAPPNAME.CRUD_OPERATIONS"
+      ]
+    }
+  ]
+}

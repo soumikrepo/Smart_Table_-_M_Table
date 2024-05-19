@@ -1,0 +1,82 @@
+<mvc:View
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:sfb="sap.ui.comp.smartfilterbar"
+    xmlns:st="sap.ui.comp.smarttable"
+    xmlns:main="sap.ui.webc.main"
+    xmlns:l="sap.ui.layout"
+    controllerName="com.app.smarttable.controller.View1"
+>
+
+<Page>
+<content>
+    <!-- VBox is use to make the table occupy the available screen height -->
+    <VBox fitContainer="true">
+    
+        <!-- The filter entity is purchaseorder -->
+        <sfb:SmartFilterBar
+            id="sfb"
+            entitySet="purchaseorder"
+            enableBasicSearch="true"
+            basicSearchFieldName="ID"
+        >
+
+
+        <sfb:controlConfiguration>
+        
+        <!-- Adding the ID smart-filter and making it mandatory by using visibleInAdvancedArea property -->
+        <sfb:ControlConfiguration key="ID" visibleInAdvancedArea="true"
+        />
+
+         <!-- Adding the Criticality smart-filter and making it mandatory by using visibleInAdvancedArea property -->
+        <sfb:ControlConfiguration
+        key="Criticality"
+        visibleInAdvancedArea="true"
+        />
+
+        </sfb:controlConfiguration>
+        
+        </sfb:SmartFilterBar>
+
+        <st:SmartTable
+            id="idSmartTable"
+            entitySet="purchaseorder"
+            tableType="Table"
+            showFullScreenButton="true"
+            smartFilterId="sfb"
+            initiallyVisibleFields="ID,PURCHASE_ORDER_ID,LIFECYCLE_STATUS,OVERALL_STATUS,Criticality,CURRENCY_CODE,GROSS_AMOUNT,TAX_AMOUNT,NET_AMOUNT"
+            enableExport="true"
+            header="Purchase Order"
+            enableAutoBinding="true"
+            enableAutoColumnWidth="true"
+            demandPopin="true"
+        >
+
+        
+            <!-- layout data used to make the table growing but the filter bar fixed -->
+            <st:layoutData>
+                <FlexItemData
+                    growFactor="1"
+                    baseSize="auto"
+                />
+            </st:layoutData>
+            
+        <Table id="idTable" mode="MultiSelect" selectionChange="onPressRow" >
+        <headerToolbar>
+        <OverflowToolbar>
+        <ToolbarSpacer></ToolbarSpacer>
+
+        <Button type="Reject" icon="sap-icon://delete" text="Delete" press="onDelete" id="idDeleteBtn" ></Button>
+        <Button type="Success" icon="sap-icon://edit" text="Update" press="onUpdate" id="idUpdateBtn"></Button>
+        <Button type="Emphasized" class="sapUiSmallMarginEnd" icon="sap-icon://create" text="Create" press="onCreate" ></Button>
+        
+
+        </OverflowToolbar>
+        </headerToolbar>
+        </Table>
+            
+        </st:SmartTable>
+    </VBox>
+    </content>
+    </Page>
+</mvc:View>

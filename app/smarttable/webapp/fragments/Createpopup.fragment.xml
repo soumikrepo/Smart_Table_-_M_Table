@@ -1,0 +1,56 @@
+<core:FragmentDefinition  xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form">
+    <Dialog id="popup" resizable="false" draggable="true">
+    <content>
+    <f:SimpleForm id="idForm">
+
+    <f:content>
+    <core:Title text="Purchase Order Details"></core:Title>
+
+    <Label text="Purchase Order Id"></Label>
+        <Input value="{local>/po/PURCHASE_ORDER_ID}"></Input>
+
+    <Label text="Partner Id"></Label>
+        <Input value="{local>/po/PARTNER_ID}"></Input>
+
+    <Label text="Lifecycle Status"></Label>
+         <Input value="{local>/po/LIFECYCLE_STATUS}"></Input>
+
+   
+    <Label text="Criticality"></Label>
+       <Input value="{local>/po/Criticality}"></Input>
+
+  <Label text="Overall Status"></Label>
+       <Input value="{local>/po/OVERALL_STATUS}"></Input>
+
+    <Label text="Currency Code"></Label>
+         <Input value="{local>/po/CURRENCY_CODE}"></Input>
+
+    <Label text="Gross Amount"></Label>
+        <Input value="{local>/po/GROSS_AMOUNT}"></Input>
+
+    <Label text="Net Amount"></Label>
+        <Input value="{local>/po/NET_AMOUNT}"></Input>
+
+    <Label text="Tax Amount"></Label>
+        <Input value="{local>/po/TAX_AMOUNT}"></Input>
+
+    </f:content>
+    
+    </f:SimpleForm>
+    </content>
+
+    <footer>
+    <Toolbar >
+    <ToolbarSpacer ></ToolbarSpacer>
+    <Button type="Accept" text="Save" press="saveDialog"></Button>
+    <Button type="Reject" text="Close" press="closeDialog"></Button>
+    <Button type="Reject" text="Clear" press="clearDialog"></Button>
+
+    </Toolbar>
+    </footer>
+
+    </Dialog>
+</core:FragmentDefinition>
+
+
+  

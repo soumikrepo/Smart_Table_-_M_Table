@@ -1,0 +1,151 @@
+_schema-version: "3.1"
+ID: smart_table
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: smart_table-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: smart_table-db
+  - name: uaa_smart_table
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    readiness-health-check-http-endpoint: /health
+    readiness-health-check-type: http
+  build-parameters:
+    builder: npm
+- name: smart_table-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: smart_table-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: smart_table-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: smart_table-destination-service
+    parameters:
+      content-target: true
+  - name: smart_table_html_repo_host
+    parameters:
+      service-key:
+        name: smart_table_html_repo_host-key
+  - name: uaa_smart_table
+    parameters:
+      service-key:
+        name: uaa_smart_table-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: managed_router_smart_table_html_repo_host
+          ServiceInstanceName: smart_table-html5-app-host-service
+          ServiceKeyName: smart_table_html_repo_host-key
+          sap.cloud.service: managed-router
+        - Authentication: OAuth2UserTokenExchange
+          Name: managed_router_uaa_smart_table
+          ServiceInstanceName: smart_table-xsuaa-service
+          ServiceKeyName: uaa_smart_table-key
+          sap.cloud.service: managed-router
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+- name: smart_table-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: smart_table_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comappsmarttable.zip
+      name: comappsmarttable
+      target-path: resources/
+    - artifacts:
+      - comappmtable.zip
+      name: comappmtable
+      target-path: resources/
+- name: comappsmarttable
+  type: html5
+  path: app/smarttable
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comappmtable
+  type: html5
+  path: app/m-table
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: smart_table-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: smart_table-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: smart_table-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: smart_table-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: smart_table_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: smart_table-html5-app-host-service
+    service-plan: app-host
+- name: uaa_smart_table
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: smart_table-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

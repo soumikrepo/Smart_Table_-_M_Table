@@ -1,0 +1,108 @@
+<mvc:View
+    controllerName="com.app.mtable.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <content />
+        <Table
+            id="idTable"
+            inset="false"
+            items="{/purchaseorder}"
+            mode="MultiSelect"
+            selectionChange="onPressRow"
+ 
+        >
+            <headerToolbar>
+                <OverflowToolbar>
+                    <Title
+                        text="Purchase Order"
+                        level="H2"
+                    />
+
+                    <ToolbarSpacer />
+                    <Button
+                        type="Accept"
+                        text="Update"
+                        id="idUpdateBtn"
+                        press="onUpdate"
+                    />
+                    <Button
+                        type="Reject"
+                        text="Delete"
+                        id="idDeleteBtn"
+                        press="onDelete"
+                    />
+                    <SearchField
+                        width="20%"
+                        search="onSearchItem"
+                    />
+                    <Button
+                        text="Create"
+                        id="idCreateBtn"
+                        type="Emphasized"
+                        press="onCreate"
+                        ariaHasPopup="Dialog"
+                    />
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column>
+                    <Text text="ID" />
+                </Column>
+
+                <Column>
+                    <Text text="PURCHASE_ORDER_ID" />
+                </Column>
+
+                <Column>
+                    <Text text="LIFECYCLE_STATUS" />
+                </Column>
+
+                <Column>
+                    <Text text="OVERALL_STATUS" />
+                </Column>
+
+                <Column>
+                    <Text text="Criticality" />
+                </Column>
+
+                <Column>
+                    <Text text="CURRENCY_CODE" />
+                </Column>
+
+                <Column>
+                    <Text text="GROSS_AMOUNT" />
+                </Column>
+
+                <Column>
+                    <Text text="NET_AMOUNT" />
+                </Column>
+
+                <Column>
+                    <Text text="TAX_AMOUNT" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{ID}" />
+                        <Text text="{PURCHASE_ORDER_ID}"/>
+                        <Text text="{LIFECYCLE_STATUS}"/>
+                        <Text text="{OVERALL_STATUS}"/>
+                        <Text text="{Criticality}"/>
+                        <Text text="{CURRENCY_CODE}"/>
+                        <Text text="{GROSS_AMOUNT}"/>
+                        <Text text="{NET_AMOUNT}"/>
+                        <Text text="{TAX_AMOUNT}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

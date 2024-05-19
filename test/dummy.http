@@ -1,0 +1,4 @@
+GET http://localhost:4004/v2/EmployeeSRV/purchaseorder HTTP/1.1
+
+###
+DELETE http://localhost:4004/v2/EmployeeSRV/purchaseorder(ID=guid'3b7f1e8d-9a9b-4a8d-9f3e-4e5f2a4a6b7d') HTTP/1.1
